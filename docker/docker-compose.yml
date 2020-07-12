@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+    factorio:
+        build:
+            context: .
+            dockerfile: ./factorio.dockerfile
+            args:
+                UBUNTU_VERSION: "20.04"
+                FACTORIO_VERSION: "0.17.79"
+        ports:
+            - 34197 # Factorio (UDP)
+        volumes:
+            - save:/save
+
+        stop_grace_period: 1m # Allow time for server to save
+
+volumes:
+    save:
+
+# networks:
+#     factorio:
