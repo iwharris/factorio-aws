@@ -1,21 +1,22 @@
 version: "3.8"
 services:
     factorio:
+        container_name: "factorio"
+        environment:
+            - SAVE_FILE
         build:
             context: .
             dockerfile: ./factorio.dockerfile
             args:
-                UBUNTU_VERSION: "20.04"
-                FACTORIO_VERSION: "0.17.79"
+                # These args are populated from .env
+                UBUNTU_VERSION: "${UBUNTU_VERSION}"
+                FACTORIO_VERSION: "${FACTORIO_VERSION}"
+                FACTORIO_ROOT: "${FACTORIO_ROOT}"
+        stop_signal: SIGKILL
         ports:
-            - 34197 # Factorio (UDP)
+            - "34197:34197/udp" # server
+            - "25575:25575/udp" # rcon
         volumes:
-            - save:/save
-
-        stop_grace_period: 1m # Allow time for server to save
-
-volumes:
-    save:
-
-# networks:
-#     factorio:
+            - ./saves:${FACTORIO_ROOT}/saves
+            - ./mods:/${FACTORIO_ROOT}/mods
+        stop_grace_period: 10s # Allow time for server to save

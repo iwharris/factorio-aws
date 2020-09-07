@@ -102,3 +102,7 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Docker mounted volumes
+docker/mods
+docker/saves

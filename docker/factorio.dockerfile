@@ -7,17 +7,20 @@ RUN apt-get install -y \
 	xz-utils
 
 ARG FACTORIO_VERSION
+ARG FACTORIO_ROOT
 
-ENV FACTORIO_VERSION=${FACTORIO_VERSION}
+ENV FACTORIO_ROOT="${FACTORIO_ROOT}"
 
-WORKDIR /workdir
+WORKDIR /tmp
 
 # Download factorio headless server
 RUN wget -q -O factorio.tar.xz https://factorio.com/get-download/${FACTORIO_VERSION}/headless/linux64
 
-RUN tar -xvf factorio.tar.xz
+# Extract to /opt; server root is /opt/factorio
+RUN tar -C /opt -xf factorio.tar.xz
 
-RUN ls -al
+WORKDIR ${FACTORIO_ROOT}
 
+COPY "./start-server.sh" "${FACTORIO_ROOT}"
 
-
+ENTRYPOINT [ "./start-server.sh" ]
