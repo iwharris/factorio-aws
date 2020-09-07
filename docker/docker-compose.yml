@@ -3,6 +3,9 @@ services:
   server:
     environment:
       - SAVE_FILE
+      - FACTORIO_PORT
+      - RCON_PORT
+      - RCON_PASSWORD
     build:
       context: .
       dockerfile: ./factorio.dockerfile
@@ -13,8 +16,8 @@ services:
         FACTORIO_ROOT: "${FACTORIO_ROOT}"
     stop_signal: SIGTERM
     ports:
-      - "34197:34197/udp" # server
-      - "25575:25575/udp" # rcon
+      - "${FACTORIO_PORT}:${FACTORIO_PORT}/udp" # server
+      - "${RCON_PORT}:${RCON_PORT}/tcp" # rcon
     volumes:
       - ./saves:${FACTORIO_ROOT}/saves
       - ./mods:/${FACTORIO_ROOT}/mods
