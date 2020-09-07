@@ -4,12 +4,13 @@ SAVE_DIR=${FACTORIO_ROOT}/saves
 SAVE_PATH=${SAVE_DIR}/${SAVE_FILE}
 SERVER_EXECUTABLE=${FACTORIO_ROOT}/bin/x64/factorio
 
-_terminate() {
-	echo "Caught SIGTERM signal"
-	kill -s INT "$child" 2>/dev/null
-}
+# Uncomment the commented lines to trap and perform actions on sigterm
+# _terminate() {
+# 	echo "Caught SIGTERM signal"
+# 	kill -s TERM "$child" 2>/dev/null
+# }
 
-trap _term SIGTERM
+# trap _terminate SIGTERM
 
 if [ -z "${SAVE_FILE}" ]; then
 	# Save file is unset; just try to load the latest
@@ -23,11 +24,12 @@ else
 	SAVE_PARAMETERS="--start-server ${SAVE_PATH}.zip"
 fi
 
-${SERVER_EXECUTABLE} \
+exec ${SERVER_EXECUTABLE} \
 	--rcon-port 25575 \
 	--rcon-password factorio \
-	${SAVE_PARAMETERS}
+	${SAVE_PARAMETERS} \
+	# &
 
-child=$!
+# child=$!
 
-wait "$child"
+# wait "$child"

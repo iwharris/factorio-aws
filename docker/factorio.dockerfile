@@ -21,6 +21,6 @@ RUN tar -C /opt -xf factorio.tar.xz
 
 WORKDIR ${FACTORIO_ROOT}
 
-COPY "./start-server.sh" "${FACTORIO_ROOT}"
+COPY "./docker-entrypoint.sh" "${FACTORIO_ROOT}"
 
-ENTRYPOINT [ "./start-server.sh" ]
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
