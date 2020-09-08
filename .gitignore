@@ -106,3 +106,4 @@ dist
 # Docker mounted volumes
 docker/mods
 docker/saves
+docker/config

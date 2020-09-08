@@ -3,6 +3,7 @@ FROM ubuntu:${UBUNTU_VERSION}
 RUN apt-get update && apt-get -y upgrade
 
 RUN apt-get install -y \
+	jq \
 	wget \
 	xz-utils
 
@@ -10,6 +11,7 @@ ARG FACTORIO_VERSION
 ARG FACTORIO_ROOT
 
 ENV FACTORIO_ROOT="${FACTORIO_ROOT}"
+ENV SCRIPTS_DIR="${FACTORIO_ROOT}/scripts"
 
 WORKDIR /tmp
 
@@ -21,6 +23,6 @@ RUN tar -C /opt -xf factorio.tar.xz
 
 WORKDIR ${FACTORIO_ROOT}
 
-COPY "./docker-entrypoint.sh" "${FACTORIO_ROOT}"
+COPY "./scripts/*" "${SCRIPTS_DIR}/"
 
-ENTRYPOINT [ "./docker-entrypoint.sh" ]
+CMD [ "./scripts/docker-entrypoint.sh" ]

@@ -21,4 +21,5 @@ services:
     volumes:
       - ./saves:${FACTORIO_ROOT}/saves
       - ./mods:/${FACTORIO_ROOT}/mods
-    stop_grace_period: 10s # Allow time for server to save
+      - ./config:/${FACTORIO_ROOT}/config
+    stop_grace_period: 10s # Allow time for server to save on exit
