@@ -1,0 +1,3 @@
+- support map preview generation in the container
+- support mapgen for scenarios
+- CI builds that push docker tags to dockerhub/ECR
